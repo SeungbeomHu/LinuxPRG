@@ -19,4 +19,8 @@ void procline();
 int gettok(char** outptr);
 int inarg(char c);
 int runcommand(char **cline, int where);
+static char inpbuf[MAXBUF];
+static char tokbuf[2*MAXBUF];
+static char *ptr = inpbuf;
+static char *tok = tokbuf;
 #endif
