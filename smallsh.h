@@ -6,6 +6,8 @@
 #include <stdlib.h>
 #include <string.h> 
 #include <fcntl.h>
+#include <pwd.h>
+#include <string.h>
 #define EOL 1
 #define ARG 2
 #define AMPERSAND 3
@@ -23,4 +25,5 @@ static char inpbuf[MAXBUF];
 static char tokbuf[2*MAXBUF];
 static char *ptr = inpbuf;
 static char *tok = tokbuf;
+char *prompt;
 #endif

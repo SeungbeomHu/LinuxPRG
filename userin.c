@@ -1,11 +1,13 @@
 #include "smallsh.h"
 
-int userin(char* p){
+int userin(char *p){
     int c,count;
     ptr = inpbuf;
     tok = tokbuf;
 
-    printf("%s" ,p);
+
+
+    printf("now > %s > " , aaaa);
     count = 0;
 
     while (1){

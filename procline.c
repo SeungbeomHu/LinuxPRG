@@ -12,6 +12,7 @@ void procline() {
                     narg++;
                 }
                 break;
+
             case EOL:
                 break;
 
@@ -34,7 +35,8 @@ void procline() {
                 }
                 narg = 0;
                 break;
-
+            default:
+                break;
         }
     }
 }
