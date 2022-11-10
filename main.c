@@ -1,12 +1,10 @@
 #include "smallsh.h"
 
 
-
 void setpromt(){
-    char cwd[MAXARG];
+    char cwd[MAXARG] = "";
 
     getcwd(cwd,MAXARG);
-
     prompt = cwd;
 
     struct passwd* pw;
@@ -31,24 +29,22 @@ void setpromt(){
             }
             else{
                 char home[MAXARG+2]="~";
-                char newpwd[MAXARG];
+                char newpwd[MAXARG]="";
                 strncpy(newpwd,cwd+homedirlen,wdlen-homedirlen);
-
-
                 strcat(home,newpwd);
                 prompt = home;
-
             }
         }
     }
-
 }
+
 
 int main() {
     setpromt();
-    printf("%s\n",prompt);
-    while(userin(prompt) != EOF)
+    while(userin(prompt) != EOF) {
         procline();
+        setpromt();
+    }
     return 0;
 }
 

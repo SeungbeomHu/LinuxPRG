@@ -5,9 +5,8 @@ int userin(char *p){
     ptr = inpbuf;
     tok = tokbuf;
 
+    printf("%s > ",p);
 
-
-    printf("now > %s > " , aaaa);
     count = 0;
 
     while (1){
@@ -15,8 +14,9 @@ int userin(char *p){
         if ((c = getchar()) == EOF){
             return EOF;
         }
-        if (count < MAXBUF)
+        if (count < MAXBUF) {
             inpbuf[count++] = c;
+        }
         if (c == '\n' && count < MAXBUF) {
             inpbuf[count] = '\0';
             return count;

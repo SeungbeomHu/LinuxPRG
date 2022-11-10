@@ -11,8 +11,6 @@ gettok.o: smallsh.h gettok.c
 	$(CC) -o gettok.o -c gettok.c
 procline.o: smallsh.h procline.c
 	$(CC) -o procline.o -c procline.c
-runcommand.o: smallsh.h runcommand.c
-	$(CC) -o runcommand.o -c runcommand.c
 userin.o: smallsh.h userin.c
 	$(CC) -o userin.o -c userin.c
 
