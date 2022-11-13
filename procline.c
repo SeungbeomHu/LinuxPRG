@@ -8,7 +8,7 @@ int runcommand(char **cline,int where){
 
 
     if(strcmp(*cline, "exit") == 0){
-        printf("logout\n");
+        printf("Bye~\n");
         exit(0);
     }
 
@@ -54,14 +54,12 @@ int runcommand(char **cline,int where){
 
     // >
     for(int i = 0; cline[i]; i++){
-        // find >
         if(strcmp(cline[i], ">") == 0){
             if((fd_new = open(cline[i + 1], O_WRONLY | O_CREAT, 0755)) == -1){
                 perror(cline[i + 1]);
                 return -1;
             }
 
-            // overwrite > to NULL
             redirect = 1;
             cline[i] = NULL;
             break;

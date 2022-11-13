@@ -1,6 +1,5 @@
 #include "smallsh.h"
 
-
 void setpromt(){
     char cwd[MAXARG] = "";
 
