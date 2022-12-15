@@ -1,4 +1,11 @@
 #include "smallsh.h"
+#include <signal.h>
+void sig_handler(int sig, siginfo_t *siginfo, void* param2){
+
+				printf("[parent:%d]: receive a signal from child %d\n",getpid(),siginfo->si_pid);
+
+
+}
 
 void setpromt(){
     char cwd[MAXARG] = "";
@@ -39,6 +46,15 @@ void setpromt(){
 
 
 int main() {
+
+				pid_t pid;
+				static struct sigaction act;
+				act.sa_sigaction = sig_handler;
+				act.sa_flags = SA_SIGINFO;
+				sigfillset(&act.sa_mask);
+				sigaction(SIGCHLD,&act,0);
+
+
     setpromt();
     while(userin(prompt) != EOF) {
         procline();

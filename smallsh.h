@@ -1,5 +1,8 @@
 
-
+#ifndef _SMALLSH_H_
+#define _SMALLSH_H_
+#include <sys/siginfo.h>
+#include <signal.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <sys/wait.h>
@@ -8,6 +11,7 @@
 #include <fcntl.h>
 #include <pwd.h>
 #include <string.h>
+#include <sys/types.h>
 #define EOL 1
 #define ARG 2
 #define AMPERSAND 3
@@ -16,9 +20,6 @@
 #define MAXBUF          4096
 #define FOREGROUND      0
 #define BACKGROUND      1
-
-#ifndef _SMALLSH_H_
-#define _SMALLSH_H_
 
 int userin(char* p);
 void procline();
