@@ -5,7 +5,8 @@ int runcommand(char **cline,int where){
     int status;
     int fd_new;
     int redirect = 0;
-
+		int isPipe = 0;
+		int pipe_idx = 0;
 
     if(strcmp(*cline, "exit") == 0){
         printf("Bye~\n");
@@ -64,34 +65,68 @@ int runcommand(char **cline,int where){
             cline[i] = NULL;
             break;
         }
+				else if(strcmp(cline[i],"|")==0){
+				
+								isPipe = 1;
+								pipe_idx = i;
+								cline[i] = NULL;
+								break;
+				}
     }
 
-
-
-
+		if(where==FOREGROUND){
+					sigaction(SIGCHLD,&oldact,&act);
+		}
     switch (pid = fork()) {
         case -1:
             perror("smallsh");
             return -1;
         case 0:
-
+						if(where==FOREGROUND){
+								sigprocmask(SIG_UNBLOCK,&signalset,NULL); 
+								}
             if(redirect == 1){
                 if(dup2(fd_new, 1) == -1)
                     perror("output redirection failed");
             }
+						if(isPipe == 1){
+
+										int pipe_fd[2];
+										if(pipe(pipe_fd) == -1){
+										perror("pipe error:");
+										}
+
+										switch(pid = fork()){
+										
+														case 0:
+																		dup2(pipe_fd[1],1);
+																		close(pipe_fd[0]);
+																		close(pipe_fd[1]);
+																		execvp(cline[0],&cline[0]);
+														default:
+																		dup2(pipe_fd[0],0);
+																		close(pipe_fd[0]);
+																		close(pipe_fd[1]);
+																		execvp(cline[pipe_idx + 1],&cline[pipe_idx + 1]);
+										}
+						
+						}
             execvp(*cline,cline);
             perror(*cline);
             exit(1);
     }
+		
 
     if(where == BACKGROUND){
         printf("[Process id] %d\n",pid);
         return 0;
     }
     if(waitpid(pid,&status,0) == -1){
+				perror("error:");
         return -1;
     }
     else{
+					sigaction(SIGCHLD,&act,&oldact);
         return status;
     }
 }

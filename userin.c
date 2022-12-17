@@ -5,6 +5,11 @@ int userin(char *p){
     ptr = inpbuf;
     tok = tokbuf;
 
+		sigemptyset(&signalset);
+		sigaddset(&signalset,SIGINT);
+		sigprocmask(SIG_BLOCK,&signalset,NULL);
+
+
     printf("%s > ",p);
 
     count = 0;

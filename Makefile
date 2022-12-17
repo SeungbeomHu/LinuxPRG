@@ -1,8 +1,8 @@
-CC=gcc -std=c99
+CC=gcc -std=gnu99 
 
 smallsh.out: main.o inarg.o gettok.o procline.o userin.o
 	$(CC) -o smallsh.out main.o inarg.o gettok.o procline.o userin.o
-
+	make clean
 main.o: main.c smallsh.h
 	$(CC) -o main.o -c main.c
 inarg.o: smallsh.h inarg.c

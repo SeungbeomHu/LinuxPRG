@@ -1,7 +1,6 @@
 
 #ifndef _SMALLSH_H_
 #define _SMALLSH_H_
-#include <sys/siginfo.h>
 #include <signal.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -30,5 +29,7 @@ char tokbuf[2*MAXBUF];
 char *ptr ;
 char *tok ;
 char *prompt;
-
+sigset_t signalset;
+static struct sigaction act;
+static struct sigaction oldact;
 #endif
