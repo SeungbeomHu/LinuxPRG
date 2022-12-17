@@ -7,7 +7,7 @@ int userin(char *p){
 
 		sigemptyset(&signalset);
 		sigaddset(&signalset,SIGINT);
-		sigprocmask(SIG_BLOCK,&signalset,NULL);
+		//sigprocmask(SIG_BLOCK,&signalset,NULL);
 
 
     printf("%s > ",p);

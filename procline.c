@@ -76,6 +76,7 @@ int runcommand(char **cline,int where){
 
 		if(where==FOREGROUND){
 					sigaction(SIGCHLD,&oldact,&act);
+					sigprocmask(SIG_BLOCK,&signalset,NULL);
 		}
     switch (pid = fork()) {
         case -1:
@@ -83,8 +84,14 @@ int runcommand(char **cline,int where){
             return -1;
         case 0:
 						if(where==FOREGROUND){
-								sigprocmask(SIG_UNBLOCK,&signalset,NULL); 
+								sigprocmask(SIG_UNBLOCK,&signalset,NULL);
+								sigaction(SIGINT,&oldact,&act);
 								}
+						else{
+						sigprocmask(SIG_BLOCK,&signalset,NULL);			
+						}
+
+
             if(redirect == 1){
                 if(dup2(fd_new, 1) == -1)
                     perror("output redirection failed");
@@ -126,6 +133,7 @@ int runcommand(char **cline,int where){
         return -1;
     }
     else{
+					sigprocmask(SIG_UNBLOCK,&signalset,NULL);	
 					sigaction(SIGCHLD,&act,&oldact);
         return status;
     }

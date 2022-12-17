@@ -2,10 +2,21 @@
 
 void sig_handler(int sig, siginfo_t *siginfo, void* param2){
 
+
+				if(sig==SIGINT){
+				
+					printf("\n");
+					siglongjmp(jmppos,1);
+				
+				}
+
 				int status;
 				waitpid(siginfo->si_pid,&status,WNOHANG);
 
-				printf("[pid : %d] : 종료됨\n",siginfo->si_pid);
+				printf("\n[pid : %d] : 종료됨\n",siginfo->si_pid);
+					siglongjmp(jmppos,1);
+				
+				
 }
 
 
@@ -54,8 +65,9 @@ int main() {
 				//act.sa_flags = SA_SIGINFO|SA_RESTART|SA_NOCLDWAIT;
 				act.sa_flags = SA_SIGINFO|SA_RESTART;
 				sigaction(SIGCHLD,&act,0);
-
-
+				sigaction(SIGINT,&act,0);
+	
+		sigsetjmp(jmppos,1);
     setpromt();
     while(userin(prompt) != EOF) {
         procline();

@@ -10,6 +10,7 @@
 #include <fcntl.h>
 #include <pwd.h>
 #include <string.h>
+#include <setjmp.h>
 #include <sys/types.h>
 #define EOL 1
 #define ARG 2
@@ -30,6 +31,7 @@ char *ptr ;
 char *tok ;
 char *prompt;
 sigset_t signalset;
+sigjmp_buf jmppos;
 static struct sigaction act;
 static struct sigaction oldact;
 #endif
